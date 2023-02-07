@@ -19,7 +19,7 @@
             <div class="col-6" style="text-align: center">
                 <h5 id="response_text">Текст ответа</h5>
                 {% if response_text %}
-                    <p>{{ response_text }}</p>
+                    <p>{{ response_text|linebreaks }}</p>
                 {% endif %}
             </div>
         </div>

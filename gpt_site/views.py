@@ -18,6 +18,6 @@ def get_gpt_response(request):
 
     print(response_text)
 
-    context = {'response_text': response_text}
+    context = {'response_text': response_text, "request_text": request_text}
 
     return render(request, "base.html", context)

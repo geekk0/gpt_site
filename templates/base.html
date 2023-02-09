@@ -10,57 +10,8 @@
 
 </head>
 <body>
-    <div>
-        {% if request_text|length > 0 %}
-            <h3 class="col-8 offset-2" id="question_label" style="">"{{ request_text }}"</h3>
-        {% else %}
-            <h3 class="col-8 offset-2" id="question_label" style="text-align: center; margin-top: 10%; visibility: hidden">Текст запроса</h3>
-        {% endif %}
-    </div>
-
-    <div class="container" style="margin-top: 5%">
-        <div class="row">
-            <div class="col-6" style="text-align: center">
-                <form name="input_text" action="{% url "get_gpt_response" %}" id="req_form" method="post">
-                    {% csrf_token %}
-                    <div class="row">
-                        <textarea oninput="auto_grow(this)" class="col-10 offset-1" style="scrollbar-width: none;
-                        margin-top: auto; margin-bottom: auto" name="request_text" id="question" placeholder="Текст запроса"></textarea>
-                        <button style="margin-top:5%" type="button" class="btn btn-dark col-2 offset-5" onclick="log()">Отправить</button>
-                        <button type="submit" style="display: none">Отправить</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-6" style="text-align: center">
-                <h5 id="response_text">Текст ответа:</h5>
-                {% if response_text %}
-                    <p>{{ response_text|linebreaks }}</p>
-                {% endif %}
-                <div style="display: none; text-align: center; margin-top: 5%; margin-left: auto; margin-right: auto"
-                     id="loading" class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-
-            </div>
-
-        </div>
-    </div>
+    {% block content %}
+    {% endblock %}
 </body>
 
-<script>
-    function log(){
-        let question_label = document.getElementById('question_label')
-        let question = document.getElementById('question')
-        let form = document.getElementById('req_form')
-        let loading = document.getElementById('loading')
-        question_label.style.visibility = 'visible'
-        loading.style.display = 'block'
-        question_label.innerHTML = '"' + question.value + '"'
-        form.submit()
-    }
-
-    function auto_grow(element){
-        element.style.height = ""
-        element.style.height = (element.scrollHeight)+"px";
-
-    }
-</script>
 </html>

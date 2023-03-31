@@ -14,8 +14,10 @@ def get_gpt_resp(prompt):
         temperature=0.5,
     )
 
-    print(completion)
+    # print(completion)
 
     response = completion.choices[0].text
+
+
     return response
 

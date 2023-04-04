@@ -10,11 +10,19 @@ from .forms import LoginForm
 class LoginView(View):
 
     def get(self, request, *args, **kwargs):
+
+        """user_agent = request.META['HTTP_USER_AGENT']
+
+        if 'Mobile' in user_agent:
+            return render(request, 'login_mobile.html', context)
+        else:"""
+
         form = LoginForm(request.POST or None)
 
         context = {'form': form}
 
         return render(request, 'login.html', context)
+
 
     def post(self, request, *args, **kwargs):
         form = LoginForm(request.POST or None)
@@ -44,16 +52,31 @@ def user_logout(request):
 @login_required
 def main(request):
 
-    return render(request, "request_page.html")
+    user_agent = request.META['HTTP_USER_AGENT']
+
+    if 'Mobile' in user_agent:
+        return render(request, 'mobile.html')
+    else:
+        return render(request, "request_page.html")
 
 
+@login_required
 def get_gpt_response(request):
     request_dict = request.POST.dict()
 
-    request_text = request_dict['request_text']
+    if request_dict['request_text']:
+        request_text = request_dict['request_text']
 
-    response_text = chatbot.get_gpt_resp(request_text)
+        response_text = chatbot.get_gpt_resp(request_text)
 
-    context = {'response_text': response_text, "request_text": request_text}
+        context = {'response_text': response_text, "request_text": request_text}
 
-    return render(request, "request_page.html", context)
+        user_agent = request.META['HTTP_USER_AGENT']
+
+        if 'Mobile' in user_agent:
+            return render(request, 'mobile.html', context)
+        else:
+            return render(request, "request_page.html", context)
+
+    else:
+        return HttpResponseRedirect('/')

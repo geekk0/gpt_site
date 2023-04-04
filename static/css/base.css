@@ -3,9 +3,13 @@
   margin-top: 2%;
 }
 
-textarea:focus, input:focus{
+/*textarea:focus, input:focus{
     outline: none;
-}
+}*/
+
+/*.auth {
+  background: green;
+}*/
 
 .lds-roller {
   display: inline-block;

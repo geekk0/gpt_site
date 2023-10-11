@@ -67,9 +67,13 @@ def get_gpt_response(request):
     if request_dict['request_text']:
         request_text = request_dict['request_text']
 
-        response_text = chatbot.get_gpt_resp(request_text)
+        try:
+            response_text = chatbot.get_gpt_resp(request_text)
+            context = {'response_text': response_text, "request_text": request_text}
+        except Exception as e:
+            context = {'response_text': e, "request_text": request_text}
 
-        context = {'response_text': response_text, "request_text": request_text}
+
 
         user_agent = request.META['HTTP_USER_AGENT']
 

@@ -1,9 +1,8 @@
 import openai
-
+from gpt.settings import openai_api_key
 
 def get_gpt_resp(prompt):
-    # openai.api_key = "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"
-    openai.api_key = "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"
+    openai.api_key = openai_api_key
 
     model_engine = "text-davinci-003"
 
